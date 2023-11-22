@@ -48,6 +48,7 @@ public class DashBoardFormController {
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerForm.fxml"))));
             stage.setTitle("Customer Form");
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -55,11 +56,21 @@ public class DashBoardFormController {
     }
 
     public void orderButtonOnAction(ActionEvent actionEvent) {
+
     }
 
     public void orderDetailsButtonOnAction(ActionEvent actionEvent) {
     }
 
     public void itemButtonOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) DashboardPane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ItemForm.fxml"))));
+            stage.setTitle("Item Form");
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
