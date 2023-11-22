@@ -2,6 +2,7 @@ package db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DBConnection {
@@ -15,7 +16,8 @@ public class DBConnection {
     public static DBConnection getInstance() throws SQLException, ClassNotFoundException {
         return dbConnection != null ? dbConnection : (dbConnection = new DBConnection());
     }
-    public DBConnection getDbConnection() {
-        return dbConnection;
+    public Connection getConnection() {
+        return connection;
     }
+
 }
