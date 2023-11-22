@@ -4,10 +4,15 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +21,7 @@ public class DashBoardFormController {
 
     public Label dateLabel;
     public Label timeLabel;
+    public BorderPane DashboardPane;
 
     public void initialize(){
         genTime();
@@ -38,6 +44,14 @@ public class DashBoardFormController {
 
     }
     public void customerButtonOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) DashboardPane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerForm.fxml"))));
+            stage.setTitle("Customer Form");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void orderButtonOnAction(ActionEvent actionEvent) {
