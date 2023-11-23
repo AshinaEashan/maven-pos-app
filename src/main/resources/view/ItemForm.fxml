@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -27,8 +28,8 @@
         <rowConstraints>
           <RowConstraints maxHeight="285.0" minHeight="10.0" prefHeight="272.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="209.0" minHeight="0.0" prefHeight="59.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="209.0" minHeight="8.0" prefHeight="9.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="460.0" minHeight="10.0" prefHeight="372.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="209.0" minHeight="8.0" prefHeight="24.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="460.0" minHeight="10.0" prefHeight="349.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="385.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -59,7 +60,7 @@
                         <DropShadow />
                      </effect>
                   </Button>
-                  <JFXTextField prefHeight="43.0" prefWidth="348.0" promptText="Item Code" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;" GridPane.rowIndex="1">
+                  <JFXTextField fx:id="itemCodeTxt" prefHeight="43.0" prefWidth="348.0" promptText="Item Code" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;" GridPane.rowIndex="1">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -70,7 +71,7 @@
                         <Insets left="5.0" />
                      </padding>
                   </JFXTextField>
-                  <JFXTextField layoutX="10.0" layoutY="94.0" prefHeight="43.0" prefWidth="350.0" promptText="Description" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;" GridPane.rowIndex="2">
+                  <JFXTextField fx:id="itesmDescTxt" layoutX="10.0" layoutY="94.0" prefHeight="43.0" prefWidth="350.0" promptText="Description" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;" GridPane.rowIndex="2">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -81,7 +82,7 @@
                         <Insets left="5.0" />
                      </padding>
                   </JFXTextField>
-                  <JFXTextField prefHeight="43.0" prefWidth="270.0" promptText="Unit Price" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <JFXTextField fx:id="itemUnitPriceTxt" prefHeight="43.0" prefWidth="270.0" promptText="Unit Price" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -92,7 +93,7 @@
                         <Insets left="5.0" />
                      </padding>
                   </JFXTextField>
-                  <JFXTextField prefHeight="43.0" prefWidth="348.0" promptText="Qty" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <JFXTextField fx:id="itemQtyTxt" prefHeight="43.0" prefWidth="348.0" promptText="Qty" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -103,7 +104,7 @@
                         <Insets left="5.0" />
                      </padding>
                   </JFXTextField>
-                  <JFXButton prefHeight="46.0" prefWidth="102.0" style="-fx-background-color: #8ed1fc;" text="Save" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <JFXButton onAction="#ItemSaveButtonOnAction" prefHeight="46.0" prefWidth="102.0" style="-fx-background-color: #8ed1fc;" text="Save" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -111,11 +112,23 @@
                         <Insets />
                      </GridPane.margin>
                   </JFXButton>
-                  <JFXButton prefHeight="46.0" prefWidth="102.0" style="-fx-background-color: #e9abab;" text="Update" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <JFXButton onAction="#ItemUpdateButtonOnAction" prefHeight="46.0" prefWidth="102.0" style="-fx-background-color: #e9abab;" text="Update" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </JFXButton>
+                  <Button mnemonicParsing="false" onAction="#RefreshButtonOnAction" prefHeight="39.0" prefWidth="65.0" style="-fx-background-color: #00d084; -fx-background-radius: 20;" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                     <graphic>
+                        <ImageView fitHeight="46.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/refresh_icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                  </Button>
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -127,7 +140,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTextField prefHeight="43.0" prefWidth="350.0" promptText="Search By ID" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;">
+                  <JFXTextField fx:id="itemSearchTxt" prefHeight="43.0" prefWidth="350.0" promptText="Search By Code" scaleShape="false" style="-fx-background-color: #e7e7e7; -fx-text-box-border: transparent; -fx-focus-color: transparent;">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -138,19 +151,19 @@
                         <Insets left="5.0" />
                      </padding>
                   </JFXTextField>
-                  <JFXButton prefHeight="46.0" prefWidth="152.0" style="-fx-background-color: #1976d2;" text="Search" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                  <JFXButton onAction="#ItemSearchButtonOnAction" prefHeight="46.0" prefWidth="152.0" style="-fx-background-color: #1976d2;" text="Search" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </JFXButton>
                </children>
             </GridPane>
-            <TableView fx:id="tblCustomer" prefHeight="302.0" prefWidth="734.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TableView fx:id="tblItem" prefHeight="302.0" prefWidth="734.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <columns>
-                  <TableColumn fx:id="colId" prefWidth="97.0" text="ID" />
-                  <TableColumn fx:id="colName" prefWidth="311.0" text="Name" />
-                  <TableColumn fx:id="colAddress" prefWidth="297.0" text="Address" />
-                  <TableColumn fx:id="colSalary" prefWidth="195.0" text="Salary" />
+                  <TableColumn fx:id="colCode" prefWidth="97.0" text="Code" />
+                  <TableColumn fx:id="colDesc" prefWidth="395.0" text="Description" />
+                  <TableColumn fx:id="colUnitPrice" prefWidth="239.0" text="Unit Price" />
+                  <TableColumn fx:id="colQty" prefWidth="169.0" text="Quantity" />
                   <TableColumn fx:id="colOption" prefWidth="148.0" text="Option" />
                </columns>
             </TableView>

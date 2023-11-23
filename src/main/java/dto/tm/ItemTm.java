@@ -1,6 +1,7 @@
 package dto.tm;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.scene.control.Button;
 import lombok.*;
 
 @AllArgsConstructor
@@ -13,5 +14,5 @@ public class ItemTm {
     private String desc;
     private double unitPrice;
     private int qty;
-    private JFXButton btn;
+    private Button btn;
 }
