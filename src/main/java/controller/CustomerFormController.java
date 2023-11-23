@@ -18,6 +18,7 @@ import model.impl.CustomerModelImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class CustomerFormController {
@@ -110,9 +111,28 @@ public class CustomerFormController {
             throw new RuntimeException(e);
         }
     }
-
+    private void clearFields() {
+        tblCustomer.refresh();
+        customerIDText.clear();
+        customerNameText.clear();
+        customerAddressText.clear();
+        customerSalaryText.clear();
+        customerIDText.setEditable(true);
+    }
     private void deleteCustomer(String id) {
-    
+        try {
+            boolean isDeleted = customerModel.deleteCustomer(id);
+            if (isDeleted){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Deleted!").show();
+                loadCustomerTable();
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Something Went Wrong").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -130,17 +150,54 @@ public class CustomerFormController {
 
     @FXML
     void RefreshButtonOnAction(ActionEvent event) {
-
+        loadCustomerTable();
+        tblCustomer.refresh();
+        clearFields();
     }
 
     @FXML
     void SaveButtonOnAction(ActionEvent event) {
 
+        try {
+            boolean isSaved = customerModel.saveCustomer(new CustomerDto(
+                    customerIDText.getText(),
+                    customerNameText.getText(),
+                    customerAddressText.getText(),
+                    Double.parseDouble(customerSalaryText.getText())
+            ));
+            if(isSaved){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Saved Successfully");
+                loadCustomerTable();
+                clearFields();
+            }
+        } catch (SQLIntegrityConstraintViolationException ex){
+            new Alert(Alert.AlertType.ERROR,"Duplicate Entry").show();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
 
     @FXML
     void UpdateButtonOnAction(ActionEvent event) {
-
+        try {
+            boolean isUpdated = customerModel.updateCustomer(new CustomerDto(
+                    customerIDText.getText(),
+                    customerNameText.getText(),
+                    customerAddressText.getText(),
+                    Double.parseDouble(customerSalaryText.getText())
+            ));
+            if (isUpdated){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Updated!").show();
+                loadCustomerTable();
+                clearFields();
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
