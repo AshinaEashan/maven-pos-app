@@ -157,7 +157,9 @@ public class CustomerFormController {
 
     @FXML
     void SaveButtonOnAction(ActionEvent event) {
-
+        if(isEmpty()){
+            new Alert(Alert.AlertType.ERROR,"Fields are Empty").show();
+        }
         try {
             boolean isSaved = customerModel.saveCustomer(new CustomerDto(
                     customerIDText.getText(),
@@ -177,6 +179,8 @@ public class CustomerFormController {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
 
@@ -198,6 +202,12 @@ public class CustomerFormController {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+    private boolean isEmpty(){
+        if(customerIDText.getText() != null && customerNameText != null && customerAddressText != null && customerSalaryText != null){
+            return false;
+        }
+        return true;
     }
 
 }

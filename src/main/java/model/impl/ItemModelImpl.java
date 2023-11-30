@@ -64,25 +64,7 @@ public class ItemModelImpl implements ItemModel {
         return list;
     }
 
-    @Override
-    public List<ItemDto> searchItem(String desc) throws SQLException, ClassNotFoundException {
-        List<ItemDto> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM item WHERE description LIKE ?";
-        PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
-        pstm.setString(1,"%"+desc+"%");
-        ResultSet resultSet = pstm.executeQuery();
-
-        while (resultSet.next()){
-            list.add(new ItemDto(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getDouble(3),
-                    resultSet.getInt(4)
-            ));
-        }
-        return list;
-    }
 }
 
 

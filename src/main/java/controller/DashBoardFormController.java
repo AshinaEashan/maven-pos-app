@@ -60,6 +60,7 @@ public class DashBoardFormController {
     }
 
     public void orderDetailsButtonOnAction(ActionEvent actionEvent) {
+
     }
 
     public void itemButtonOnAction(ActionEvent actionEvent) {
@@ -72,5 +73,18 @@ public class DashBoardFormController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void placeOrderButtonOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) DashboardPane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/PlaceOrderForm.fxml"))));
+            stage.setTitle("Place Order Form");
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

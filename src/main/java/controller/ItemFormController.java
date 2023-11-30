@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXTextField;
 import dto.CustomerDto;
 import dto.ItemDto;
 import dto.tm.ItemTm;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -64,6 +66,7 @@ public class ItemFormController {
     private TableColumn colOption;
 
     private ItemModel itemModel = new ItemModelImpl();
+    private ObservableList<ItemTm> tmList;
     public void initialize(){
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colDesc.setCellValueFactory(new PropertyValueFactory<>("desc"));
@@ -75,6 +78,17 @@ public class ItemFormController {
         tblItem.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             setData(newValue);
         });
+
+        itemSearchTxt.textProperty().addListener((observable, oldValue, newValue) -> {
+            ObservableList<ItemTm> itemTms = FXCollections.observableArrayList();
+            for (ItemTm item : tmList) {
+                if (item.getCode().contains(newValue) || item.getDesc().contains(newValue)) {
+                    itemTms.add(item);
+                }
+            }
+            tblItem.setItems(itemTms);
+        });
+
     }
 
     private void setData(ItemTm newValue) {
@@ -104,7 +118,7 @@ public class ItemFormController {
     }
 
     private void loadCustomerTable() {
-        ObservableList<ItemTm> tmList = FXCollections.observableArrayList();
+        tmList = FXCollections.observableArrayList();
 
         try {
             List<ItemDto> dtoList = itemModel.allItem();
@@ -172,39 +186,6 @@ public class ItemFormController {
         }
     }
 
-    @FXML
-    void ItemSearchButtonOnAction(ActionEvent event) {
-        ObservableList<ItemTm> tmList = FXCollections.observableArrayList();
-
-        try {
-            List<ItemDto> dtoList = itemModel.searchItem(itemSearchTxt.getText());
-
-            for (ItemDto dto : dtoList){
-                Button btn = new Button("Delete");
-
-                ItemTm item = new ItemTm(
-                        dto.getCode(),
-                        dto.getDesc(),
-                        dto.getUnitPrice(),
-                        dto.getQty(),
-                        btn
-                );
-
-                btn.setOnAction(actionEvent -> {
-                    deleteCustomer(item.getCode());
-                });
-
-                tmList.add(item);
-            }
-
-            tblItem.setItems(tmList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
     @FXML
     void ItemUpdateButtonOnAction(ActionEvent event) {
