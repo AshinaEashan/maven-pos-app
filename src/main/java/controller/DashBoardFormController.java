@@ -59,9 +59,6 @@ public class DashBoardFormController {
 
     }
 
-    public void orderDetailsButtonOnAction(ActionEvent actionEvent) {
-
-    }
 
     public void itemButtonOnAction(ActionEvent actionEvent) {
         Stage stage = (Stage) DashboardPane.getScene().getWindow();

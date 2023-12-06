@@ -13,8 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.CustomerModel;
-import model.impl.CustomerModelImpl;
+import dao.CustomerModel;
+import dao.impl.CustomerModelImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
