@@ -56,7 +56,15 @@ public class DashBoardFormController {
     }
 
     public void orderButtonOnAction(ActionEvent actionEvent) {
-
+        Stage stage = (Stage) DashboardPane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/OrdersForm.fxml"))));
+            stage.setTitle("Orders Form");
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

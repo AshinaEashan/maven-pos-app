@@ -64,4 +64,18 @@ public class OrderModelImpl implements OrderModel {
         return list;
     }
 
+    @Override
+    public boolean deleteOrder(String id) throws SQLException, ClassNotFoundException {
+
+        boolean isDeleted = OrderDetailModel.deleteDetails(id);
+        boolean completelyDeleted = false;
+        if (isDeleted){
+            String sql = "DELETE FROM orders WHERE id=?";
+            PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
+            pstm.setString(1,id);
+             completelyDeleted = pstm.executeUpdate() > 0;
+        }
+        return completelyDeleted;
+    }
+
 }
