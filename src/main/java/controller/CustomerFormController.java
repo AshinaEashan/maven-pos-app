@@ -176,8 +176,8 @@ public class CustomerFormController {
             new Alert(Alert.AlertType.ERROR,"Duplicate Entry").show();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (ClassNotFoundException | RuntimeException e) {
+            new Alert(Alert.AlertType.INFORMATION,"Empty Fields..!").show();
         }
 
 
@@ -199,8 +199,10 @@ public class CustomerFormController {
                 loadCustomerTable();
                 clearFields();
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        }catch (ClassNotFoundException | RuntimeException e){
+            new Alert(Alert.AlertType.INFORMATION,"Select a Customer").show();
         }
     }
     private boolean isEmpty(){

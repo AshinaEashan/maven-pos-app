@@ -178,8 +178,8 @@ public class ItemFormController {
             new Alert(Alert.AlertType.ERROR,"Duplicate Entry").show();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (ClassNotFoundException | RuntimeException e) {
+            new Alert(Alert.AlertType.INFORMATION,"Empty Fields..!").show();
         }
     }
 
@@ -198,8 +198,10 @@ public class ItemFormController {
                 loadCustomerTable();
                 clearFields();
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        }catch(ClassNotFoundException | RuntimeException e){
+            new Alert(Alert.AlertType.INFORMATION,"Select a Item.").show();
         }
     }
 
